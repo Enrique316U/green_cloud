@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:google_fonts/google_fonts.dart";
 import "login_screen.dart";
 import "register_screen.dart";
 
@@ -27,68 +28,148 @@ class WelcomeScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  //Imagen de personajes
+                  // Imagen de personajes
                   Image.asset(
                     "lib/assets/images/pets.png",
-                    width: 200,
-                    height: 200,
+                    width: 400,
+                    height: 400,
                   ),
                   const SizedBox(height: 20),
-                  //Título
-                  const Text(
+                  // Título
+                  Text(
                     "Bienvenido",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
-                  ),
-                  const Text(
-                    "Green Cloud",
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.green,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headlineMedium, // Usa headlineMedium
                   ),
                   const SizedBox(height: 10),
-                  const Text(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "Green ",
+                        style:
+                            Theme.of(context).textTheme.headlineLarge?.copyWith(
+                                  color: Colors.white, // Sobrescribe el color
+                                ),
+                      ),
+                      Text(
+                        "Cloud",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headlineLarge, // Usa headlineLarge
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
                     "Esta aplicación fue creada para estar siempre conectados a nuestras plantas.",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.green,
-                    ),
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium, // Usa bodyMedium
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 32),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => LoginScreen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(double.infinity, 50),
-                      backgroundColor: Colors.red, // Ancho completo
-                    ),
-                    child: const Text("Igresar"),
-                  ),
-                  const SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (_) => const RegisterScreen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      minimumSize:
-                          const Size(double.infinity, 50), // Ancho completo
-                      backgroundColor: Colors.blue, // Color personalizado
-                    ),
-                    child: const Text("Registrarse"),
+                  // Botones en una fila
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Botón de Ingresar
+
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (_) => LoginScreen()),
+                            );
+                          },
+                          style: ButtonStyle(
+                            minimumSize: WidgetStateProperty.all(
+                                const Size(170, 50)), // Tamaño fijo
+                            backgroundColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                                    (Set<WidgetState> states) {
+                              if (states.contains(WidgetState.pressed)) {
+                                return Colors.white;
+                              }
+                              return const Color.fromARGB(255, 193, 39, 44);
+                            }),
+                            shadowColor: WidgetStateProperty.all(Colors.white),
+                            elevation: WidgetStateProperty.all(10),
+                            shape: WidgetStateProperty.all(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                            ),
+                            foregroundColor:
+                                WidgetStateProperty.resolveWith<Color>(
+                              (Set<WidgetState> states) {
+                                if (states.contains(WidgetState.pressed)) {
+                                  return const Color.fromARGB(255, 193, 39, 44);
+                                }
+                                return Colors.white;
+                              },
+                            ),
+                          ),
+                          child: Text(
+                            "Ingresar",
+                            style: GoogleFonts.poppins(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          )),
+                      const SizedBox(width: 24), // Espacio entre botones
+                      // Botón de Registrarse
+
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const RegisterScreen()),
+                          );
+                        },
+                        style: ButtonStyle(
+                          minimumSize: WidgetStateProperty.all(
+                              const Size(170, 50)), // Tamaño fijo
+                          backgroundColor:
+                              WidgetStateProperty.resolveWith<Color>(
+                            (Set<WidgetState> states) {
+                              if (states.contains(WidgetState.pressed)) {
+                                return const Color.fromARGB(255, 193, 39,
+                                    44); // Color cuando está presionado
+                              }
+                              return Colors.white; // Color normal
+                            },
+                          ),
+                          shadowColor: WidgetStateProperty.all(Colors.white),
+                          elevation: WidgetStateProperty.all(10),
+                          shape: WidgetStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          foregroundColor:
+                              WidgetStateProperty.resolveWith<Color>(
+                            (Set<WidgetState> states) {
+                              if (states.contains(WidgetState.pressed)) {
+                                return Colors
+                                    .white; // Color del texto cuando está presionado
+                              }
+                              return const Color.fromARGB(
+                                  255, 193, 39, 44); // Color del texto normal
+                            },
+                          ),
+                        ),
+                        child: Text(
+                          "Registrarse",
+                          style: GoogleFonts.poppins(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
