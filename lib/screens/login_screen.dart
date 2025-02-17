@@ -46,20 +46,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               const SizedBox(height: 20),
-              Row(
-                children: [
-                  const SizedBox(width: 20), // Espacio a la izquierda
-                  Expanded(
-                    // Para que el texto ocupe el espacio restante
-                    child: Text(
-                      "Bienvenido de nuevo. ¡Me alegro de verte de nuevo!",
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ),
-                  const SizedBox(width: 20), // Espacio a la derecha
-                ],
-              ),
-              const SizedBox(height: 20),
               SizedBox(
                 width: 350,
                 height: 310,
@@ -82,10 +68,10 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Container(
                 decoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 255, 255, 255),
+                  color: const Color.fromARGB(255, 240, 219, 219),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
-                height: 320.0,
+                height: 500.0,
                 child: Padding(
                   padding: EdgeInsets.all(16.0),
                   child: Form(
@@ -134,7 +120,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
+                              return 'Por favor ingresa tu email';
                             }
                             return null;
                           },
@@ -183,53 +169,12 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your password';
+                              return 'Por favor ingresa tu contraseña';
                             }
                             return null;
                           },
                         ),
-                        const SizedBox(height: 40.0),
-                        Container(
-                          height: 50.0,
-                          width: 300.0,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(25.0),
-                              border:
-                                  Border.all(color: Colors.blue, width: 2.0),
-                              color: Colors.blue),
-                          child: ElevatedButton(
-                            onPressed: () {
-                              if (_formKey.currentState!.validate()) {
-                                // Perform login logic here
-                                String email = emailController.text;
-                                String password = passwordController.text;
-                                // Add your authentication logic here
-                                print(
-                                    'Logging in: $email with password: $password');
-                                isChecking!.change(false);
-                                isHandsUp!.change(false);
-                                trigFail!.change(false);
-                                trigSuccess!.change(true);
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => BottomNavBar()),
-                                );
-                              } else {
-                                isChecking!.change(false);
-                                isHandsUp!.change(false);
-                                trigSuccess!.change(false);
-                                trigFail!.change(true);
-                              }
-                            },
-                            child: Text('Iniciar Sesión',
-                                style: TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 24.0,
-                                    fontFamily: "Poppins")),
-                          ),
-                        ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 0),
                         Align(
                           alignment: Alignment.centerRight,
                           child: TextButton(
@@ -244,7 +189,54 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: const Text("¿Olvidaste tu contraseña?"),
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 10.0),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState?.validate() ?? false) {
+                              // Perform login logic here
+                              String email = emailController.text;
+                              String password = passwordController.text;
+                              // Add your authentication logic here
+                              print(
+                                  'Logging in: $email with password: $password');
+                              isChecking?.change(false);
+                              isHandsUp?.change(false);
+                              trigFail?.change(false);
+                              trigSuccess?.change(true);
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => BottomNavBar()),
+                              );
+                            } else {
+                              isChecking?.change(false);
+                              isHandsUp?.change(false);
+                              trigSuccess?.change(false);
+                              trigFail?.change(true);
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor:
+                                Colors.red, // Color de fondo del botón
+                            foregroundColor: Colors.white, // Color del texto
+                            minimumSize: Size(300.0, 50.0), // Tamaño del botón
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  10.0), // Bordes redondeados
+                            ),
+                          ),
+                          child: Text(
+                            'Iniciar Sesión',
+                            style: TextStyle(
+                              color: Colors
+                                  .white, // Cambiar a blanco para que sea visible en el fondo rojo
+                              fontSize: 24.0,
+                              fontFamily: "Poppins",
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 36),
                         const Text(
                           "O continúa con",
                           style: TextStyle(fontSize: 16),
@@ -282,6 +274,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
+
+                        // Espacio adicional para empujar el contenido hacia abajo
+                        const SizedBox(height: 50),
+
+                        // Espacio adicional para más contenido
                       ],
                     ),
                   ),
