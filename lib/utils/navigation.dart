@@ -22,7 +22,7 @@ class RouteGenerator {
       case LoginScreen.routeName:
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case RegisterScreen.routeName:
-        return MaterialPageRoute(builder: (_) => const RegisterScreen());
+        return MaterialPageRoute(builder: (_) => RegisterScreen());
       case ForgotPasswordScreen.routeName:
         return MaterialPageRoute(builder: (_) => const ForgotPasswordScreen());
       case OtpVerificationScreen.routeName:

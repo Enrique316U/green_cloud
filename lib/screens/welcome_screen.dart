@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
 import "login_screen.dart";
 import "register_screen.dart";
+import "../widgets/animated_combined_painter.dart"; // Importa el CustomPainter
 
 class WelcomeScreen extends StatelessWidget {
   static const String routeName = "/welcome";
@@ -9,17 +10,34 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final backgroundColor = Colors.white; // Cambia esto al color que prefieras
+
     return Scaffold(
       body: Stack(
         children: [
           // Fondo de pantalla
           Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Colors.green.shade100, Colors.green.shade200],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
+            width: double.infinity,
+            height: double.infinity,
+            child: Stack(
+              children: [
+                // Degradado semi-transparente
+                Container(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.green.shade100,
+                        Colors.green.shade200,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                ),
+                // Fondo con CustomPaint
+
+                AnimatedBackground(targetColor: Colors.white),
+              ],
             ),
           ),
           Center(
@@ -125,8 +143,7 @@ class WelcomeScreen extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (_) => const RegisterScreen()),
+                            MaterialPageRoute(builder: (_) => RegisterScreen()),
                           );
                         },
                         style: ButtonStyle(

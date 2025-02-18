@@ -3,6 +3,7 @@ import "package:green_cloud/screens/home_screen.dart";
 import "package:green_cloud/screens/favorites_screen.dart";
 import "package:green_cloud/screens/profile_screen.dart";
 import "package:green_cloud/screens/search_screen.dart";
+import "package:green_cloud/data/plants_data.dart";
 
 class BottomNavBar extends StatefulWidget {
   static const String routeName = "/bottom_nav_bar";
@@ -16,7 +17,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    HomeScreen(),
+    HomeScreen(plant: plants[0]),
     SearchScreen(),
     FavoritesScreen(),
     ProfileScreen(),
