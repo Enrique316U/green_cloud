@@ -32,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   rive.SMIInput<bool>? isHandsUp;
   rive.SMIInput<bool>? trigSuccess;
   rive.SMIInput<bool>? trigFail;
+  rive.SMIInput<double>? numLook;
   late rive.StateMachineController? stateMachineController;
 
   @override
@@ -72,6 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       trigSuccess =
                           stateMachineController?.findInput("trigSuccess");
                       trigFail = stateMachineController?.findInput("trigFail");
+                      numLook = stateMachineController?.findInput("numLook");
                     }),
                   ),
                   Container(
@@ -94,6 +96,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                 }
                                 if (isChecking == null) return;
                                 isChecking!.change(true);
+                                if (numLook != null) {
+                                  numLook!.change(value.length.toDouble());
+                                }
                               },
                               controller: emailController,
                               decoration: InputDecoration(
@@ -109,23 +114,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderSide: BorderSide(
                                       color: const Color(0xFF025810)),
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0)),
+                                      BorderRadius.all(Radius.circular(10.0)),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: const Color(0xFF025810)),
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0)),
+                                      BorderRadius.all(Radius.circular(10.0)),
                                 ),
                                 errorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.red),
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0)),
+                                      BorderRadius.all(Radius.circular(10.0)),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.red),
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0)),
+                                      BorderRadius.all(Radius.circular(10.0)),
                                 ),
                               ),
                               validator: (value) {
@@ -160,23 +165,23 @@ class _LoginScreenState extends State<LoginScreen> {
                                   borderSide: BorderSide(
                                       color: const Color(0xFF025810)),
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0)),
+                                      BorderRadius.all(Radius.circular(10.0)),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderSide: BorderSide(
                                       color: const Color(0xFF025810)),
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0)),
+                                      BorderRadius.all(Radius.circular(10.0)),
                                 ),
                                 errorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.red),
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0)),
+                                      BorderRadius.all(Radius.circular(10.0)),
                                 ),
                                 focusedErrorBorder: OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.red),
                                   borderRadius:
-                                      BorderRadius.all(Radius.circular(30.0)),
+                                      BorderRadius.all(Radius.circular(10.0)),
                                 ),
                               ),
                               validator: (value) {

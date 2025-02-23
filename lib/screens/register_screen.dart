@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:green_cloud/services/auth_service.dart";
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
 import "../widgets/animated_combined_painter.dart";
+import "package:green_cloud/screens/login_screen.dart";
 
 class RegisterScreen extends StatelessWidget {
   static const String routeName = "/register";
@@ -170,9 +171,17 @@ class RegisterScreen extends StatelessWidget {
                         backgroundColor: const Color.fromARGB(255, 193, 39, 44),
                       )),
                   const SizedBox(height: 40),
-                  const Text(
-                    "Ya tengo una cuenta",
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => LoginScreen()),
+                      );
+                    },
+                    child: const Text(
+                      "Ya tengo una cuenta",
+                      style: TextStyle(fontSize: 16, color: Colors.grey),
+                    ),
                   ),
                   const SizedBox(height: 40),
                   const Text(

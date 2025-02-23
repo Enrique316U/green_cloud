@@ -89,105 +89,102 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 32),
                   // Botones en una fila
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Botón de Ingresar
-
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (_) => LoginScreen()),
-                            );
-                          },
-                          style: ButtonStyle(
-                            minimumSize: WidgetStateProperty.all(
-                                const Size(170, 50)), // Tamaño fijo
-                            backgroundColor:
-                                WidgetStateProperty.resolveWith<Color>(
-                                    (Set<WidgetState> states) {
-                              if (states.contains(WidgetState.pressed)) {
-                                return Colors.white;
-                              }
-                              return const Color.fromARGB(255, 193, 39, 44);
-                            }),
-                            shadowColor: WidgetStateProperty.all(Colors.white),
-                            elevation: WidgetStateProperty.all(10),
-                            shape: WidgetStateProperty.all(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                            ),
-                            foregroundColor:
-                                WidgetStateProperty.resolveWith<Color>(
-                              (Set<WidgetState> states) {
-                                if (states.contains(WidgetState.pressed)) {
-                                  return const Color.fromARGB(255, 193, 39, 44);
-                                }
-                                return Colors.white;
-                              },
-                            ),
-                          ),
-                          child: Text(
-                            "Ingresar",
-                            style: GoogleFonts.poppins(
-                              fontSize: 22,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          )),
-                      const SizedBox(width: 24), // Espacio entre botones
-                      // Botón de Registrarse
-
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (_) => RegisterScreen()),
-                          );
+                  // Botón de Ingresar
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => LoginScreen()),
+                      );
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(
+                        const Size(double.infinity,
+                            65), // El botón ocupará todo el ancho disponible y tendrá una altura de 65 píxeles
+                      ),
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Colors.white;
+                          }
+                          return const Color.fromARGB(255, 193, 39, 44);
                         },
-                        style: ButtonStyle(
-                          minimumSize: WidgetStateProperty.all(
-                              const Size(170, 50)), // Tamaño fijo
-                          backgroundColor:
-                              WidgetStateProperty.resolveWith<Color>(
-                            (Set<WidgetState> states) {
-                              if (states.contains(WidgetState.pressed)) {
-                                return const Color.fromARGB(255, 193, 39,
-                                    44); // Color cuando está presionado
-                              }
-                              return Colors.white; // Color normal
-                            },
-                          ),
-                          shadowColor: WidgetStateProperty.all(Colors.white),
-                          elevation: WidgetStateProperty.all(10),
-                          shape: WidgetStateProperty.all(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          foregroundColor:
-                              WidgetStateProperty.resolveWith<Color>(
-                            (Set<WidgetState> states) {
-                              if (states.contains(WidgetState.pressed)) {
-                                return Colors
-                                    .white; // Color del texto cuando está presionado
-                              }
-                              return const Color.fromARGB(
-                                  255, 193, 39, 44); // Color del texto normal
-                            },
-                          ),
-                        ),
-                        child: Text(
-                          "Registrarse",
-                          style: GoogleFonts.poppins(
-                            fontSize: 22,
-                            fontWeight: FontWeight.w600,
-                          ),
+                      ),
+                      shadowColor: MaterialStateProperty.all(Colors.white),
+                      elevation: MaterialStateProperty.all(10),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                    ],
+                      foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return const Color.fromARGB(255, 193, 39, 44);
+                          }
+                          return Colors.white;
+                        },
+                      ),
+                    ),
+                    child: Text(
+                      "Ingresar",
+                      style: GoogleFonts.poppins(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
+
+                  const SizedBox(height: 24), // Espacio entre botones
+                  // Botón de Registrarse
+
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => RegisterScreen()),
+                      );
+                    },
+                    style: ButtonStyle(
+                      minimumSize: MaterialStateProperty.all(
+                        const Size(double.infinity,
+                            65), // El botón ocupará todo el ancho disponible y tendrá una altura de 65 píxeles
+                      ),
+                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return const Color.fromARGB(255, 193, 39,
+                                44); // Color cuando está presionado
+                          }
+                          return Colors.white; // Color normal
+                        },
+                      ),
+                      shadowColor: MaterialStateProperty.all(Colors.white),
+                      elevation: MaterialStateProperty.all(10),
+                      shape: MaterialStateProperty.all(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      foregroundColor: MaterialStateProperty.resolveWith<Color>(
+                        (Set<MaterialState> states) {
+                          if (states.contains(MaterialState.pressed)) {
+                            return Colors
+                                .white; // Color del texto cuando está presionado
+                          }
+                          return const Color.fromARGB(
+                              255, 193, 39, 44); // Color del texto normal
+                        },
+                      ),
+                    ),
+                    child: Text(
+                      "Registrarse",
+                      style: GoogleFonts.poppins(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )
                 ],
               ),
             ),

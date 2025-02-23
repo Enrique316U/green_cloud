@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "../app_theme.dart";
 import "../widgets/animated_combined_painter.dart";
+import "package:green_cloud/screens/otp_verfication_screen.dart";
 
 class ForgotPasswordScreen extends StatelessWidget {
   static const String routeName = "/forgot-password";
@@ -63,14 +64,17 @@ class ForgotPasswordScreen extends StatelessWidget {
                         width: 2.0,
                       ),
                     ),
-                    labelText: "Contraseña",
+                    labelText: "Correo electrónico",
                   ),
                   obscureText: true,
                 ),
                 const SizedBox(height: 40),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => OtpVerificationScreen()));
                   },
                   child: Text(
                     "Enviar",

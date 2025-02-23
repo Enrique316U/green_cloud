@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
       title: "Green Cloud", // Título de la aplicación
       theme: AppTheme.lightTheme, // Tema claro
       darkTheme: AppTheme.darkTheme, // Tema oscuro
-      themeMode: ThemeMode.system, // Usa el modo del sistema (claro/oscuro)
+      // themeMode: ThemeMode.system, // Usa el modo del sistema (claro/oscuro)
+      themeMode: ThemeMode.light,
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate, // Localización para Material
         GlobalWidgetsLocalizations.delegate, // Localización para widgets
