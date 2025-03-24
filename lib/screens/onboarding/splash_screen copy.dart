@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "logo_screen.dart";
+import "02_logo_screen.dart";
 import "package:rive/rive.dart" as rive;
 
 class DiagonalLinePainter extends CustomPainter {

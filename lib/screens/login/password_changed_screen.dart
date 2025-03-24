@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:green_cloud/screens/welcome_screen.dart";
+import "package:green_cloud/screens/onboarding/04_fuction_principal.dart";
 import "package:green_cloud/widgets/animated_combined_painter.dart";
 
 class PasswordChangedScreen extends StatelessWidget {
@@ -40,7 +40,7 @@ class PasswordChangedScreen extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (_) => const WelcomeScreen()));
+                            builder: (_) => const fuction_principal()));
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(double.infinity, 65),

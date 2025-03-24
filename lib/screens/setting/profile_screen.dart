@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import "../widgets/animated_combined_painter.dart";
+import "../../widgets/animated_combined_painter.dart";
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);

@@ -5,7 +5,7 @@ import "package:green_cloud/firebase_options.dart";
 import "package:green_cloud/app_theme.dart";
 import "package:green_cloud/utils/navigation.dart"; // Asegúrate de que este archivo exista
 import "package:green_cloud/widgets/BottomNavBar.dart"; // Asegúrate de que este archivo exista
-import "package:green_cloud/screens/splash_screen.dart";
+import "package:green_cloud/screens/onboarding/01_splash_screen.dart";
 
 Future<void> main() async {
   // Inicializa Flutter Binding

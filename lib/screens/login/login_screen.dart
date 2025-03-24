@@ -1,13 +1,13 @@
 import "package:flutter/material.dart";
 import "package:green_cloud/widgets/BottomNavBar.dart";
 import "forgot_password_screen.dart";
-import "../services/auth_service.dart";
+import "../../services/auth_service.dart";
 import "package:flutter/services.dart";
 import "package:flutter/cupertino.dart";
 import "package:rive/rive.dart" as rive;
 import "package:google_fonts/google_fonts.dart";
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
-import "../widgets/animated_combined_painter.dart";
+import "../../widgets/animated_combined_painter.dart";
 
 class LoginScreen extends StatefulWidget {
   static const String routeName = "/login";

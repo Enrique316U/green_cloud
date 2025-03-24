@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/plant.dart';
-import '../widgets/sensor_data_row.dart';
-import '../widgets/tag_widget.dart';
+import '../../models/plant.dart';
+import '../../widgets/sensor_data_row.dart';
+import '../../widgets/tag_widget.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class HomeScreen extends StatelessWidget {

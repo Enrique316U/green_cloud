@@ -1,13 +1,13 @@
 import "package:flutter/material.dart";
-import "package:green_cloud/screens/splash_screen.dart";
-import "package:green_cloud/screens/logo_screen.dart";
-import "package:green_cloud/screens/welcome_screen.dart";
-import "package:green_cloud/screens/login_screen.dart";
-import "package:green_cloud/screens/register_screen.dart";
-import "package:green_cloud/screens/forgot_password_screen.dart";
-import "package:green_cloud/screens/otp_verfication_screen.dart";
-import "package:green_cloud/screens/reset_password_screen.dart";
-import "package:green_cloud/screens/password_changed_screen.dart";
+import "package:green_cloud/screens/onboarding/01_splash_screen.dart";
+import "package:green_cloud/screens/onboarding/02_logo_screen.dart";
+import "package:green_cloud/screens/onboarding/04_fuction_principal.dart";
+import "package:green_cloud/screens/login/login_screen.dart";
+import "package:green_cloud/screens/login/register_screen.dart";
+import "package:green_cloud/screens/login/forgot_password_screen.dart";
+import "package:green_cloud/screens/login/otp_verfication_screen.dart";
+import "package:green_cloud/screens/login/reset_password_screen.dart";
+import "package:green_cloud/screens/login/password_changed_screen.dart";
 import "package:green_cloud/widgets/BottomNavBar.dart";
 
 class RouteGenerator {
@@ -17,8 +17,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => SplashScreen());
       case LogoScreen.routeName:
         return MaterialPageRoute(builder: (_) => const LogoScreen());
-      case WelcomeScreen.routeName:
-        return MaterialPageRoute(builder: (_) => const WelcomeScreen());
+      case fuction_principal.routeName:
+        return MaterialPageRoute(builder: (_) => const fuction_principal());
       case LoginScreen.routeName:
         return MaterialPageRoute(builder: (_) => LoginScreen());
       case RegisterScreen.routeName:

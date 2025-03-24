@@ -1,7 +1,6 @@
 import "package:flutter/material.dart";
-import "../app_theme.dart";
-import "../widgets/animated_combined_painter.dart";
-import "package:green_cloud/screens/otp_verfication_screen.dart";
+import "../../widgets/animated_combined_painter.dart";
+import "package:green_cloud/screens/login/otp_verfication_screen.dart";
 
 class ForgotPasswordScreen extends StatelessWidget {
   static const String routeName = "/forgot-password";

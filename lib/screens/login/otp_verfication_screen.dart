@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import "package:green_cloud/widgets/animated_combined_painter.dart";
-import "package:green_cloud/screens/password_changed_screen.dart";
+import "package:green_cloud/screens/login/password_changed_screen.dart";
 
 class OtpVerificationScreen extends StatelessWidget {
   static const String routeName = "/otp-verification";

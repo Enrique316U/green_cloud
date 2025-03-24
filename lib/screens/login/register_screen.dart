@@ -1,8 +1,8 @@
 import "package:flutter/material.dart";
 import "package:green_cloud/services/auth_service.dart";
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
-import "../widgets/animated_combined_painter.dart";
-import "package:green_cloud/screens/login_screen.dart";
+import "../../widgets/animated_combined_painter.dart";
+import "package:green_cloud/screens/login/login_screen.dart";
 
 class RegisterScreen extends StatelessWidget {
   static const String routeName = "/register";
@@ -11,8 +11,6 @@ class RegisterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = Color.fromARGB(
-        255, 151, 226, 193); // Cambia esto al color que prefieras
     return Scaffold(
         resizeToAvoidBottomInset: true,
         body: Stack(

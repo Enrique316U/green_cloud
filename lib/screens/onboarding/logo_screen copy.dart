@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "welcome_screen.dart";
+import "04_fuction_principal.dart";
 
 class LogoScreen extends StatefulWidget {
   static const String routeName = "/logo";
@@ -17,7 +17,7 @@ class _LogoScreenState extends State<LogoScreen> {
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const WelcomeScreen()),
+        MaterialPageRoute(builder: (_) => const fuction_principal()),
       );
     });
   }

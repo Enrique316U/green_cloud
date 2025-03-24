@@ -1,6 +1,7 @@
-import "dart:math";
-import "package:flutter/material.dart";
-import "package:flutter/scheduler.dart";
+import 'dart:math';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AnimatedCombinedPainter extends CustomPainter {
   final Color targetColor;
@@ -10,9 +11,12 @@ class AnimatedCombinedPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    //Calcula el color actual basado en el progreso
+    // Calcula el color actual basado en el progreso
     final currentColor = Color.lerp(
-        const Color.fromARGB(0, 255, 255, 255), targetColor, progress)!;
+      const Color.fromARGB(0, 255, 255, 255),
+      targetColor,
+      progress,
+    )!;
 
     final fillPaint = Paint()
       ..color = currentColor
@@ -23,41 +27,21 @@ class AnimatedCombinedPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4.0;
 
-    // Dibuja el primer círculo lleno
+    // Círculo 1 (llenado)
     canvas.drawCircle(
       Offset(size.width * 0.9, -size.height * 0.0),
-      size.width * 0.6,
+      size.width * 0.4,
       fillPaint,
     );
 
+    // Círculo 2 (borde)
     canvas.drawCircle(
-      Offset(size.width * 0.7, size.height * 0.05),
-      size.width * 0.6,
+      Offset(size.width * 0.7, size.height * 0.08),
+      size.width * 0.4,
       strokePaint,
     );
 
-    // Dibuja el primer cuadrado con borde
-    final rect1 = Rect.fromLTWH(
-      -size.width * 0.1,
-      size.height * 0.8,
-      size.width * 0.5,
-      size.width * 0.7,
-    );
-    canvas.drawRect(rect1, strokePaint);
-
-    //dibuja el segundo cuadrado con borde
-    canvas.save();
-    canvas.translate(size.width * 0.0, size.height * 0.85);
-    canvas.rotate(pi / 6);
-
-    final rect2 = Rect.fromLTWH(
-      -size.width * 0.15,
-      -size.width * 0.15,
-      size.width * 0.9,
-      size.width * 0.9,
-    );
-    canvas.drawRect(rect2, strokePaint);
-    canvas.restore();
+    // ¡Eliminamos los cuadrados de la parte de abajo!
   }
 
   @override
@@ -66,8 +50,6 @@ class AnimatedCombinedPainter extends CustomPainter {
         oldDelegate.targetColor != targetColor;
   }
 }
-
-// widget maneja animacion
 
 class AnimatedBackground extends StatefulWidget {
   final Color targetColor;
@@ -86,13 +68,10 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
   @override
   void initState() {
     super.initState();
-
     // Inicializar el Ticker
     _ticker = createTicker((elapsed) {
       setState(() {
-        //tiempro trascurrido
         _progress = (elapsed.inMilliseconds / 3000).clamp(0.0, 1.0);
-
         if (_progress == 1.0) {
           _ticker.stop();
         }
@@ -109,9 +88,31 @@ class _AnimatedBackgroundState extends State<AnimatedBackground>
 
   @override
   Widget build(BuildContext context) {
-    return CustomPaint(
-      size: MediaQuery.of(context).size,
-      painter: AnimatedCombinedPainter(widget.targetColor, _progress),
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    final aspectRatio = screenWidth / screenHeight; // Relación de aspecto
+
+    // Ajuste dinámico según la relación de aspecto
+    double svgHeight = screenHeight * (aspectRatio > 0.65 ? 0.35 : 0.48);
+    double svgWidth = screenWidth * 1; // Mantén el ancho al 100%
+
+    return Stack(
+      children: [
+        CustomPaint(
+          size: Size(screenWidth, screenHeight),
+          painter: AnimatedCombinedPainter(widget.targetColor, _progress),
+        ),
+        Positioned(
+          bottom: 0,
+          left: (screenWidth - svgWidth) / 2,
+          child: SvgPicture.asset(
+            'lib/assets/images/onboarding/misti.svg',
+            width: svgWidth,
+            height: svgHeight,
+            fit: BoxFit.contain,
+          ),
+        ),
+      ],
     );
   }
 }
