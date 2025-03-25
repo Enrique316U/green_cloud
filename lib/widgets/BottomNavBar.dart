@@ -17,13 +17,36 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
 
+  final List<NavItem> _navItems = [
+    NavItem(
+      iconPath: 'lib/assets/icons/flag.svg',
+      selectedColor: Colors.green,
+    ),
+    NavItem(
+      iconPath: 'lib/assets/icons/tent.svg',
+      selectedColor: Colors.green,
+    ),
+    NavItem(
+      iconPath: 'lib/assets/icons/flower.svg',
+      selectedColor: Colors.green,
+    ),
+    NavItem(
+      iconPath: 'lib/assets/icons/plant_stack.svg',
+      selectedColor: Colors.green,
+    ),
+    NavItem(
+      iconPath: 'lib/assets/icons/user.svg',
+      selectedColor: Colors.green,
+    ),
+  ];
+
   static final List<Widget> _widgetOptions = <Widget>[
     HomeScreen(plant: plants[0]),
-    SearchScreen(),
-    FavoritesScreen(),
-    ProfileScreen(),
-    // Añade la quinta pantalla aquí
-    // Por ejemplo: NotificationsScreen(),
+    const SearchScreen(),
+    const FavoritesScreen(),
+    const Scaffold(
+        body: Center(child: Text('Plant Stack Screen'))), // Nueva pantalla
+    const ProfileScreen(), // Perfil ahora en índice 4
   ];
 
   void _onItemTapped(int index) {
@@ -35,77 +58,83 @@ class _BottomNavBarState extends State<BottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: _widgetOptions.elementAt(_selectedIndex)),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
-        items: [
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'lib/assets/icons/flag.svg',
-              width: 24,
-              height: 24,
-              colorFilter: ColorFilter.mode(
-                _selectedIndex == 0 ? Colors.green : Colors.grey,
-                BlendMode.srcIn,
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _widgetOptions,
+      ),
+      bottomNavigationBar: Container(
+        height: 85, // Aumenté ligeramente la altura para mejor visualización
+        decoration: BoxDecoration(
+          color: Color.fromARGB(
+              255, 246, 242, 229), // Color de fondo cambiado a verde
+          borderRadius: const BorderRadius.vertical(
+            top: Radius.circular(20),
+          ), // Esquinas superiores redondeadas
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 15,
+              offset: const Offset(0, -3),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          // Para evitar que los hijos sobresalgan del borde redondeado
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: List.generate(
+              _navItems.length,
+              (index) => IconButton(
+                icon: CustomSvgIcon(
+                  iconPath: _navItems[index].iconPath,
+                  isSelected: _selectedIndex == index,
+                  color: _selectedIndex == index
+                      ? Colors.green // Color cuando está seleccionado
+                      : Colors.white.withOpacity(
+                          0.6), // Color cuando no está seleccionado
+                ),
+                onPressed: () => _onItemTapped(index),
               ),
             ),
-            label: "",
           ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'lib/assets/icons/tent.svg',
-              width: 24,
-              height: 24,
-              colorFilter: ColorFilter.mode(
-                _selectedIndex == 1 ? Colors.green : Colors.grey,
-                BlendMode.srcIn,
-              ),
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'lib/assets/icons/flower.svg',
-              width: 24,
-              height: 24,
-              colorFilter: ColorFilter.mode(
-                _selectedIndex == 2 ? Colors.green : Colors.grey,
-                BlendMode.srcIn,
-              ),
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'lib/assets/icons/plant_stack.svg',
-              width: 24,
-              height: 24,
-              colorFilter: ColorFilter.mode(
-                _selectedIndex == 3 ? Colors.green : Colors.grey,
-                BlendMode.srcIn,
-              ),
-            ),
-            label: "",
-          ),
-          BottomNavigationBarItem(
-            icon: SvgPicture.asset(
-              'lib/assets/icons/user.svg',
-              width: 24,
-              height: 24,
-              colorFilter: ColorFilter.mode(
-                _selectedIndex == 4 ? Colors.green : Colors.grey,
-                BlendMode.srcIn,
-              ),
-            ),
-            label: "",
-          ),
-        ],
-        selectedItemColor: Colors.green,
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
+        ),
+      ),
+    );
+  }
+}
+
+class NavItem {
+  final String iconPath;
+  final Color selectedColor;
+
+  NavItem({
+    required this.iconPath,
+    this.selectedColor = Colors.grey,
+  });
+}
+
+class CustomSvgIcon extends StatelessWidget {
+  final String iconPath;
+  final bool isSelected;
+  final Color color;
+
+  const CustomSvgIcon({
+    super.key,
+    required this.iconPath,
+    this.isSelected = false,
+    this.color = Colors.grey,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SvgPicture.asset(
+      iconPath,
+      width: 60,
+      height: 60,
+      colorFilter: ColorFilter.mode(
+        isSelected ? color : Colors.grey,
+        BlendMode.srcIn,
       ),
     );
   }
