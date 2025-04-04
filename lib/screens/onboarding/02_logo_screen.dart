@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import "04_fuction_principal.dart";
 
 class LogoScreen extends StatefulWidget {
@@ -20,71 +21,76 @@ class LogoScreenState extends State<LogoScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    final screenHeight = MediaQuery.of(context).size.height;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final maxWidth = constraints.maxWidth;
+        final maxHeight = constraints.maxHeight;
 
-    // Altura del área de rectángulos en la parte inferior
-    final bottomAreaHeight = screenHeight * 0.25;
+        // Altura del área de rectángulos en la parte inferior
+        final bottomAreaHeight = maxHeight * 0.25;
 
-    // Cálculos para los logos (aumentados de tamaño)
-    final logoWidth = screenWidth * 0.45; // Ajustado para mejor proporción
-    final spaceBetween = screenWidth * 0.04;
-    final totalWidth = (logoWidth * 2) + spaceBetween;
-    final startX = (screenWidth - totalWidth) / 2;
+        // Cálculos para los logos
+        final mainLogoSize = maxWidth * 0.5;
+        final bottomLogoWidth = maxWidth * 0.40;
+        final spaceBetween = maxWidth * 0.04;
+        final totalWidth = (bottomLogoWidth * 2) + spaceBetween;
+        final startX = (maxWidth - totalWidth) / 2;
 
-    return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 72, 175, 80), // Verde de fondo
-      body: SafeArea(
-        child: Stack(
-          children: [
-            // Logo principal centrado y movido hacia arriba
-            Positioned(
-              top: screenHeight *
-                  0.199, // Mover hacia arriba (estaba en el centro)
-              left: screenWidth / 2 - (screenWidth * 0.6) / 2,
-              child: Image.asset(
-                'lib/assets/images/onboarding/usmp_logo.png',
-                width: screenWidth * 0.6,
-              ),
+        return Scaffold(
+          backgroundColor:
+              const Color.fromARGB(255, 72, 175, 80), // Verde de fondo
+          body: SafeArea(
+            child: Stack(
+              children: [
+                // Logo principal centrado y movido hacia arriba
+                Positioned(
+                  top: maxHeight * 0.16,
+                  left: (maxWidth - mainLogoSize) / 2,
+                  child: SvgPicture.asset(
+                    'lib/assets/images/USMP_LOGO.svg',
+                    width: mainLogoSize,
+                  ),
+                ),
+
+                // Área de rectángulos en la parte inferior
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: CustomPaint(
+                    size: Size(maxWidth, bottomAreaHeight),
+                    painter: BottomRectanglesPainter(),
+                  ),
+                ),
+
+                // Primer logo en el rectángulo central
+                Positioned(
+                  bottom: bottomAreaHeight * 0.3,
+                  left: startX,
+                  child: SvgPicture.asset(
+                    'lib/assets/images/concytec.svg',
+                    width: bottomLogoWidth,
+                    height: bottomAreaHeight * 0.35,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+
+                // Segundo logo en el rectángulo central
+                Positioned(
+                  bottom: bottomAreaHeight * 0.3,
+                  left: startX + bottomLogoWidth + spaceBetween,
+                  child: SvgPicture.asset(
+                    'lib/assets/images/prociencia.svg',
+                    width: bottomLogoWidth,
+                    height: bottomAreaHeight * 0.35,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ],
             ),
-
-            // Área de rectángulos en la parte inferior
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: CustomPaint(
-                size: Size(screenWidth, bottomAreaHeight),
-                painter: BottomRectanglesPainter(),
-              ),
-            ),
-
-            // Primer logo en el rectángulo central
-            Positioned(
-              bottom: bottomAreaHeight * 0.2, // Posición ajustada
-              left: startX,
-              child: Image.asset(
-                'lib/assets/images/onboarding/concytec_logo.png',
-                width: logoWidth,
-                height: bottomAreaHeight * 0.6, // Altura controlada
-                fit: BoxFit.contain,
-              ),
-            ),
-
-            // Segundo logo en el rectángulo central
-            Positioned(
-              bottom: bottomAreaHeight * 0.2, // Posición ajustada
-              left: startX + logoWidth + spaceBetween,
-              child: Image.asset(
-                'lib/assets/images/onboarding/pro_ciencia_logo.png',
-                width: logoWidth,
-                height: bottomAreaHeight * 0.6, // Altura controlada
-                fit: BoxFit.contain,
-              ),
-            ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

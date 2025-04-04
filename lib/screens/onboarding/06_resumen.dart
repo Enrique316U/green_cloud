@@ -9,240 +9,231 @@ import "../../widgets/animated_combined_painter.dart";
 class ResumenScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final maxHeight = constraints.maxHeight;
+        final maxWidth = constraints.maxWidth;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          /// 1. FONDO CON GRADIENTE
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 209, 242, 230),
-                  Colors.green.shade100,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+        // Calculamos tamaños responsivos
+        final titleSize = maxWidth * 0.06;
+        final logoSize = maxWidth * 0.12;
+        final descriptionSize = maxWidth * 0.045;
+        final buttonTextSize = maxWidth * 0.045;
+        final footerTextSize = maxWidth * 0.035;
+
+        // Tamaño de la imagen ajustado para diferentes pantallas
+        final imageSize = maxWidth * 0.45;
+
+        return Scaffold(
+          body: Stack(
+            children: [
+              /// 1. FONDO CON GRADIENTE
+              Container(
+                width: maxWidth,
+                height: maxHeight,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      const Color.fromARGB(255, 209, 242, 230),
+                      Colors.green.shade100,
+                    ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
               ),
-            ),
-          ),
 
-          //Capa 1.5 Figuras animadas
-          AnimatedBackground(targetColor: Color.fromARGB(255, 189, 223, 208)),
+              //Capa 1.5 Figuras animadas
+              AnimatedBackground(
+                  targetColor: const Color.fromARGB(255, 189, 223, 208)),
 
-          /// 2. CONTENIDO PRINCIPAL
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
-              child: Column(
-                children: [
-                  SizedBox(height: screenHeight * 0.04),
-
-                  // Character and welcome section
-                  Container(
-                    width: screenWidth * 0.6,
-                    height: screenWidth * 0.6,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color.fromARGB(255, 233, 241, 217),
+              /// 2. CONTENIDO PRINCIPAL
+              SafeArea(
+                child: SingleChildScrollView(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: maxWidth * 0.05,
+                      vertical: maxHeight * 0.02,
                     ),
-                    child: ClipOval(
-                      child: SizedBox(
-                        width: screenWidth * 0.6,
-                        height: screenWidth * 0.6,
-                        child: Image.asset(
-                          'lib/assets/images/onboarding/pet.png',
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: screenHeight * 0.02),
-
-                  Text(
-                    "Resumen",
-                    style: GoogleFonts.nunito(
-                      fontSize: screenWidth * 0.07,
-                      fontWeight: FontWeight.w500,
-                      color: Color.fromARGB(255, 2, 88, 16),
-                    ),
-                  ),
-
-                  SizedBox(height: screenHeight * 0.01),
-
-                  RichText(
-                    textAlign: TextAlign.center,
-                    text: TextSpan(
+                    child: Column(
                       children: [
-                        TextSpan(
-                          text: "Green ",
-                          style: GoogleFonts.nunito(
-                            fontSize: screenWidth * 0.14,
-                            fontWeight: FontWeight.w900,
-                            color: Colors.white,
+                        SizedBox(height: maxHeight * 0.02),
+
+                        // Imagen del personaje
+                        Container(
+                          width: imageSize,
+                          height: imageSize,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color.fromARGB(255, 233, 241, 217),
+                          ),
+                          child: ClipOval(
+                            child: Image.asset(
+                              'lib/assets/images/onboarding/pet.png',
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                        TextSpan(
-                          text: "Cloud",
+
+                        SizedBox(height: maxHeight * 0.03),
+
+                        // Título "Resumen"
+                        Text(
+                          "Resumen",
                           style: GoogleFonts.nunito(
-                            fontSize: screenWidth * 0.14,
-                            fontWeight: FontWeight.w900,
-                            color: Color.fromARGB(255, 76, 175, 79),
+                            fontSize: titleSize,
+                            fontWeight: FontWeight.w500,
+                            color: const Color.fromARGB(255, 2, 88, 16),
                           ),
                         ),
+
+                        SizedBox(height: maxHeight * 0.02),
+
+                        // Logo "Green Cloud"
+                        RichText(
+                          textAlign: TextAlign.center,
+                          text: TextSpan(
+                            children: [
+                              TextSpan(
+                                text: "Green ",
+                                style: GoogleFonts.nunito(
+                                  fontSize: logoSize,
+                                  fontWeight: FontWeight.w900,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              TextSpan(
+                                text: "Cloud",
+                                style: GoogleFonts.nunito(
+                                  fontSize: logoSize,
+                                  fontWeight: FontWeight.w900,
+                                  color: const Color.fromARGB(255, 76, 175, 79),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(height: maxHeight * 0.02),
+
+                        // Texto descriptivo
+                        Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: maxWidth * 0.05),
+                          child: Text(
+                            "Tu configuración está lista para comenzar a cuidar tus plantas por favor apoyanos con una donación.",
+                            style: GoogleFonts.nunito(
+                              fontSize: descriptionSize,
+                              fontWeight: FontWeight.w400,
+                              color: const Color.fromARGB(255, 51, 51, 51),
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+
+                        SizedBox(height: maxHeight * 0.04),
+
+                        // Botón Ingresar
+                        _buildButton(
+                          text: "Ingresar",
+                          color: const Color.fromARGB(255, 76, 175, 79),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => LoginScreen()),
+                          ),
+                          height: maxHeight * 0.065,
+                          fontSize: buttonTextSize,
+                        ),
+
+                        SizedBox(height: maxHeight * 0.02),
+
+                        // Botón Registrarse
+                        _buildButton(
+                          text: "Registrarse",
+                          color: const Color.fromARGB(255, 176, 196, 164),
+                          onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (_) => RegisterScreen()),
+                          ),
+                          height: maxHeight * 0.065,
+                          fontSize: buttonTextSize,
+                        ),
+
+                        SizedBox(height: maxHeight * 0.04),
+
+                        // Footer con términos y privacidad
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            _buildFooterText(
+                              "Privacy Policy",
+                              footerTextSize,
+                              Colors.grey.shade700,
+                            ),
+                            _buildFooterText(
+                              " - ",
+                              footerTextSize,
+                              Colors.grey.shade700,
+                            ),
+                            _buildFooterText(
+                              "Terms of Service",
+                              footerTextSize,
+                              Colors.grey.shade700,
+                            ),
+                          ],
+                        ),
+
+                        SizedBox(height: maxHeight * 0.02),
                       ],
                     ),
                   ),
-
-                  SizedBox(height: screenHeight * 0.01),
-
-                  Text(
-                    "Tu configuración está lista para comenzar a cuidar tus plantas por favor apoyanos con una donación.",
-                    style: GoogleFonts.nunito(
-                      fontSize: screenWidth * 0.06,
-                      fontWeight: FontWeight.w400,
-                      color: Color.fromARGB(255, 51, 51, 51),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-
-                  SizedBox(height: screenHeight * 0.05),
-
-                  // Continue button
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => LoginScreen(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 76, 175, 79),
-                      foregroundColor: Colors.white,
-                      minimumSize: Size(double.infinity, screenHeight * 0.06),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Text(
-                      "Ingresar",
-                      style: GoogleFonts.nunito(
-                        fontSize: screenWidth * 0.05,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: screenHeight * 0.02),
-
-                  // Back button (styled as secondary button)
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (_) => RegisterScreen(),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromARGB(255, 176, 196, 164),
-                      foregroundColor: Colors.white,
-                      minimumSize: Size(double.infinity, screenHeight * 0.06),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Text(
-                      "Registrarse",
-                      style: GoogleFonts.nunito(
-                        fontSize: screenWidth * 0.05,
-                        fontWeight: FontWeight.w900,
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(height: screenHeight * 0.089),
-
-                  // Terms and Privacy
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "Privacy Policy",
-                        style: GoogleFonts.nunito(
-                          fontSize: screenWidth * 0.035,
-                          color: Colors.grey.shade700,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                      Text(
-                        " - ",
-                        style: GoogleFonts.nunito(
-                          fontSize: screenWidth * 0.035,
-                          color: Colors.grey.shade700,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                      Text(
-                        "Terms of Service",
-                        style: GoogleFonts.nunito(
-                          fontSize: screenWidth * 0.035,
-                          color: Colors.grey.shade700,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  SizedBox(height: screenHeight * 0.02),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
+        );
+      },
+    );
+  }
+
+  Widget _buildButton({
+    required String text,
+    required Color color,
+    required VoidCallback onPressed,
+    required double height,
+    required double fontSize,
+  }) {
+    return SizedBox(
+      width: double.infinity,
+      height: height,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: color,
+          foregroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+        child: Text(
+          text,
+          style: GoogleFonts.nunito(
+            fontSize: fontSize,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
       ),
     );
   }
 
-  Widget _buildSummaryItem({
-    required BuildContext context,
-    required String title,
-    required IconData icon,
-  }) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    return Row(
-      children: [
-        Icon(
-          icon,
-          size: screenWidth * 0.06,
-          color: Color.fromARGB(255, 76, 175, 79),
-        ),
-        SizedBox(width: screenWidth * 0.04),
-        Expanded(
-          child: Text(
-            title,
-            style: GoogleFonts.nunito(
-              fontSize: screenWidth * 0.04,
-              fontWeight: FontWeight.w500,
-              color: Color.fromARGB(255, 76, 175, 79),
-            ),
-          ),
-        ),
-        Icon(
-          Icons.check_circle,
-          size: screenWidth * 0.06,
-          color: Colors.green,
-        ),
-      ],
+  Widget _buildFooterText(String text, double fontSize, Color color) {
+    return Text(
+      text,
+      style: GoogleFonts.nunito(
+        fontSize: fontSize,
+        color: color,
+        fontWeight: FontWeight.w300,
+      ),
     );
   }
 }
@@ -259,14 +250,14 @@ class DashboardScreen extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
         ),
-        backgroundColor: Color.fromARGB(255, 76, 175, 79),
+        backgroundColor: const Color.fromARGB(255, 76, 175, 79),
       ),
       body: Center(
         child: Text(
           "Tablero Principal",
           style: GoogleFonts.nunito(
             fontSize: 18,
-            color: Color.fromARGB(255, 76, 175, 79),
+            color: const Color.fromARGB(255, 76, 175, 79),
           ),
         ),
       ),

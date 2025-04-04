@@ -1,8 +1,5 @@
 import "package:flutter/material.dart";
 import "package:google_fonts/google_fonts.dart";
-import "../login/login_screen.dart";
-import "../login/register_screen.dart";
-import "../onboarding/04_fuction_principal.dart"; // Importado para navegación
 import "../onboarding/05_permisos_configuracion.dart"; // Importado para navegación,
 import "../onboarding/06_resumen.dart"; // Importado para navegación
 import "../../widgets/animated_combined_painter.dart";
@@ -21,183 +18,219 @@ class _fuction_principalState extends State<fuction_principal> {
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Calculamos dimensiones responsivas basadas en el tamaño de la pantalla
+        final maxHeight = constraints.maxHeight;
+        final maxWidth = constraints.maxWidth;
 
-    return Scaffold(
-      body: Stack(
-        children: [
-          AnimatedBackground(targetColor: Color.fromARGB(255, 151, 226, 193)),
-          // Background gradient
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Color.fromARGB(255, 209, 242, 230),
-                  Colors.green.shade100,
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-            ),
-          ),
-          // Decorative circular shapes - sized relative to screen
-          Positioned(
-            top: -screenWidth * 0.2,
-            right: -screenWidth * 0.2,
-            child: Container(
-              width: screenWidth * 0.5,
-              height: screenWidth * 0.5,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.green.shade300.withOpacity(0.3),
-              ),
-            ),
-          ),
-          Positioned(
-            top: screenHeight * 0.05,
-            left: -screenWidth * 0.1,
-            child: Container(
-              width: screenWidth * 0.3,
-              height: screenWidth * 0.3,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.green.shade300.withOpacity(0.3),
-              ),
-            ),
-          ),
+        // Ajustamos tamaños de fuente y espaciado según el ancho de la pantalla
+        final titleSize = maxWidth * 0.06;
+        final buttonTextSize = maxWidth * 0.045;
+        final descriptionSize = maxWidth * 0.04;
+        final imageSize = maxWidth * 0.45; // Reducimos el tamaño de la imagen
 
-          // Content
-          SafeArea(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.06),
-              child: Column(
-                children: [
-                  SizedBox(height: screenHeight * 0.02),
-                  // Main content area
-                  Expanded(
-                    child: PageView(
-                      controller: _pageController,
-                      onPageChanged: (index) {
-                        setState(() {
-                          _currentPage = index;
-                        });
-                      },
-                      children: [
-                        _buildWelcomePage(context),
-                        _buildFeaturesPage(context),
-                      ],
-                    ),
-                  ),
-
-                  // Page indicator
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 8,
-                        height: 8,
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color:
-                              _currentPage == 0 ? Colors.green : Colors.white,
-                        ),
-                      ),
-                      Container(
-                        width: 8,
-                        height: 8,
-                        margin: const EdgeInsets.symmetric(horizontal: 4),
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color:
-                              _currentPage == 1 ? Colors.green : Colors.white,
-                        ),
-                      ),
+        return Scaffold(
+          body: Stack(
+            children: [
+              Container(
+                width: maxWidth,
+                height: maxHeight,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Color.fromARGB(255, 209, 242, 230),
+                      Color.fromARGB(255, 209, 242, 230),
                     ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
-                  SizedBox(height: screenHeight * 0.03),
-
-                  // Bottom buttons
-                  Row(
+                ),
+              ),
+              AnimatedBackground(
+                  targetColor: const Color.fromARGB(255, 189, 223, 208)),
+              SafeArea(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: maxWidth * 0.05),
+                  child: Column(
                     children: [
-                      // Skip button
+                      SizedBox(height: maxHeight * 0.02),
                       Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (_) => ResumenScreen()),
-                            );
+                        child: PageView(
+                          controller: _pageController,
+                          onPageChanged: (index) {
+                            setState(() {
+                              _currentPage = index;
+                            });
                           },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color.fromARGB(255, 176, 196, 164),
-                            foregroundColor: Colors.white,
-                            padding: EdgeInsets.symmetric(
-                              vertical: screenHeight * 0.02,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: Text(
-                            "Saltar",
-                            style: GoogleFonts.nunito(
-                              fontSize: screenWidth * 0.04,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                          children: [
+                            _buildWelcomePage(
+                                context, imageSize, titleSize, descriptionSize),
+                            _buildFeaturesPage(
+                                context, imageSize, titleSize, descriptionSize),
+                          ],
                         ),
                       ),
-                      SizedBox(width: screenWidth * 0.04),
-                      // Next button
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_currentPage == 0) {
-                              _pageController.animateToPage(
-                                1,
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeInOut,
-                              );
-                            } else {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                      PermisosConfiguration(), // Navega a la pantalla principal
+                      // Indicadores de página
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          _buildPageIndicator(0),
+                          SizedBox(width: maxWidth * 0.02),
+                          _buildPageIndicator(1),
+                        ],
+                      ),
+                      SizedBox(height: maxHeight * 0.02),
+                      // Botones de navegación
+                      Padding(
+                        padding: EdgeInsets.only(bottom: maxHeight * 0.03),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: _buildButton(
+                                "Saltar",
+                                const Color.fromARGB(255, 176, 196, 164),
+                                buttonTextSize,
+                                () => Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => ResumenScreen()),
                                 ),
-                              );
-                            }
-                          },
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor:
+                              ),
+                            ),
+                            SizedBox(width: maxWidth * 0.04),
+                            Expanded(
+                              child: _buildButton(
+                                "Siguiente",
                                 const Color.fromARGB(255, 76, 175, 79),
-                            foregroundColor: Colors.white,
-                            padding: EdgeInsets.symmetric(
-                              vertical: screenHeight * 0.02,
+                                buttonTextSize,
+                                () {
+                                  if (_currentPage == 0) {
+                                    _pageController.animateToPage(
+                                      1,
+                                      duration:
+                                          const Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut,
+                                    );
+                                  } else {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => PermisosConfiguration(),
+                                      ),
+                                    );
+                                  }
+                                },
+                              ),
                             ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                          ),
-                          child: Text(
-                            "Siguiente",
-                            style: GoogleFonts.nunito(
-                              fontSize: screenWidth * 0.04,
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
+                          ],
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: screenHeight * 0.03),
-                ],
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildPageIndicator(int pageNumber) {
+    return Container(
+      width: 8,
+      height: 8,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: _currentPage == pageNumber ? Colors.green : Colors.white,
+      ),
+    );
+  }
+
+  Widget _buildButton(
+      String text, Color color, double fontSize, VoidCallback onPressed) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        backgroundColor: color,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      child: Text(
+        text,
+        style: GoogleFonts.nunito(
+          fontSize: fontSize,
+          fontWeight: FontWeight.w900,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWelcomePage(BuildContext context, double imageSize,
+      double titleSize, double descriptionSize) {
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: imageSize,
+            height: imageSize,
+            child: Padding(
+              padding: EdgeInsets.all(imageSize * 0.05),
+              child: ClipOval(
+                child: Image.asset(
+                  "lib/assets/images/onboarding/viejo.png",
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 20),
+          Text(
+            "Bienvenido",
+            style: GoogleFonts.nunito(
+              fontSize: titleSize,
+              fontWeight: FontWeight.w500,
+              color: const Color.fromARGB(255, 2, 88, 16),
+            ),
+          ),
+          const SizedBox(height: 10),
+          RichText(
+            text: TextSpan(
+              children: [
+                TextSpan(
+                  text: "Green ",
+                  style: GoogleFonts.nunito(
+                    fontSize: titleSize * 2,
+                    fontWeight: FontWeight.w900,
+                    color: Colors.white,
+                  ),
+                ),
+                TextSpan(
+                  text: "Cloud",
+                  style: GoogleFonts.nunito(
+                    fontSize: titleSize * 2,
+                    fontWeight: FontWeight.w900,
+                    color: const Color.fromARGB(255, 76, 175, 79),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              "Esta aplicación fue creada para estar siempre conectados con nuestras plantas.",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.nunito(
+                fontSize: descriptionSize,
+                fontWeight: FontWeight.w400,
+                color: Colors.grey.shade800,
               ),
             ),
           ),
@@ -206,194 +239,72 @@ class _fuction_principalState extends State<fuction_principal> {
     );
   }
 
-  Widget _buildWelcomePage(BuildContext context) {
-    // Get screen dimensions for responsive sizing
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    // Calculate image size based on screen dimensions, but constrained
-    final imageSize = screenWidth * 0.35;
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Character image
-        Container(
-          width: imageSize,
-          height: imageSize,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.white,
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(screenWidth * 0.02),
-            child: ClipOval(
-              child: Image.asset(
-                "lib/assets/images/pets.png",
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ),
-        SizedBox(height: screenHeight * 0.04),
-
-        // Welcome text
-        Text(
-          "Bienvenido",
-          style: GoogleFonts.nunito(
-            fontSize: screenWidth * 0.06,
-            fontWeight: FontWeight.w500,
-            color: Colors.green.shade800,
-          ),
-        ),
-        SizedBox(height: screenHeight * 0.02),
-
-        // App name
-        RichText(
-          text: TextSpan(
-            children: [
-              TextSpan(
-                text: "Green ",
-                style: GoogleFonts.nunito(
-                  fontSize: screenWidth * 0.07,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-              TextSpan(
-                text: "Cloud",
-                style: GoogleFonts.nunito(
-                  fontSize: screenWidth * 0.07,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green.shade800,
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: screenHeight * 0.03),
-
-        // Description text
-        Container(
-          width: screenWidth * 0.8,
-          child: Text(
-            "Esta aplicación fue creada para estar siempre conectados con nuestras plantas.",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.nunito(
-              fontSize: screenWidth * 0.04,
-              color: Colors.grey.shade800,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildFeaturesPage(BuildContext context) {
-    // Get screen dimensions for responsive sizing
-    final screenHeight = MediaQuery.of(context).size.height;
-    final screenWidth = MediaQuery.of(context).size.width;
-
-    // Calculate image size based on screen dimensions
-    final imageSize = screenWidth * 0.35;
-
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        // Character image with background
-        Container(
-          width: imageSize,
-          height: imageSize,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Colors.amber.shade200,
-          ),
-          child: Stack(
-            children: [
-              // Background mountains
-              Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: imageSize * 0.4,
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(imageSize),
-                      bottomRight: Radius.circular(imageSize),
-                    ),
-                    color: Colors.grey.shade400,
-                  ),
-                ),
-              ),
-              // Character image
-              ClipOval(
+  Widget _buildFeaturesPage(BuildContext context, double imageSize,
+      double titleSize, double descriptionSize) {
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: imageSize,
+            height: imageSize,
+            child: Padding(
+              padding: EdgeInsets.all(imageSize * 0.05),
+              child: ClipOval(
                 child: Image.asset(
-                  "lib/assets/images/farmer_character.png", // Asegúrate de tener esta imagen
+                  "lib/assets/images/onboarding/niña.png",
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
-                    // Fallback if image not found
-                    return Icon(
-                      Icons.person,
-                      size: imageSize * 0.6,
-                      color: Colors.green.shade800,
-                    );
-                  },
                 ),
               ),
-            ],
-          ),
-        ),
-        SizedBox(height: screenHeight * 0.04),
-
-        // Title text
-        Container(
-          width: screenWidth * 0.8,
-          child: Text(
-            "Conoce lo que puedes hacer con Green Cloud",
-            textAlign: TextAlign.center,
-            style: GoogleFonts.nunito(
-              fontSize: screenWidth * 0.05,
-              fontWeight: FontWeight.w600,
-              color: Colors.green.shade800,
             ),
           ),
-        ),
-        SizedBox(height: screenHeight * 0.04),
-
-        // Features container
-        Container(
-          width: screenWidth * 0.85,
-          padding: EdgeInsets.all(screenWidth * 0.05),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.7),
-            borderRadius: BorderRadius.circular(15),
+          const SizedBox(height: 20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              "Conoce lo que puedes hacer con Green Cloud",
+              textAlign: TextAlign.center,
+              style: GoogleFonts.nunito(
+                fontSize: titleSize,
+                fontWeight: FontWeight.w500,
+                color: const Color.fromARGB(255, 2, 88, 16),
+              ),
+            ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildFeatureItem(context, "Monitorea tu planta"),
-              SizedBox(height: screenHeight * 0.02),
-              _buildFeatureItem(context, "Desbloquea recompensas"),
-              SizedBox(height: screenHeight * 0.02),
-              _buildFeatureItem(context, "Aprende jugando"),
-            ],
+          const SizedBox(height: 20),
+          Container(
+            margin: const EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Colors.white.withOpacity(0.7),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildFeatureItem(
+                    context, "Monitorea tu planta", descriptionSize),
+                const SizedBox(height: 15),
+                _buildFeatureItem(
+                    context, "Desbloquea recompensas", descriptionSize),
+                const SizedBox(height: 15),
+                _buildFeatureItem(context, "Aprende jugando", descriptionSize),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
-  Widget _buildFeatureItem(BuildContext context, String text) {
-    final screenWidth = MediaQuery.of(context).size.width;
-
+  Widget _buildFeatureItem(BuildContext context, String text, double fontSize) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           width: 8,
           height: 8,
-          margin: EdgeInsets.only(top: 8, right: 8),
+          margin: const EdgeInsets.only(top: 8, right: 8),
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: Colors.green.shade800,
@@ -403,8 +314,8 @@ class _fuction_principalState extends State<fuction_principal> {
           child: Text(
             text,
             style: GoogleFonts.nunito(
-              fontSize: screenWidth * 0.04,
-              fontWeight: FontWeight.w500,
+              fontSize: fontSize,
+              fontWeight: FontWeight.w400,
               color: Colors.grey.shade800,
             ),
           ),

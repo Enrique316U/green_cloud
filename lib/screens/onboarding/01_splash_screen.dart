@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '02_logo_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -25,50 +26,60 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-          /// Imagen de fondo
-          Positioned.fill(
-            child: Image.asset(
-              "lib/assets/images/Splash_01.png",
-              fit: BoxFit.cover,
-            ),
-          ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final maxWidth = constraints.maxWidth;
+        final maxHeight = constraints.maxHeight;
 
-          /// Texto separado en la parte superior
-          Positioned(
-            top: 80,
-            left: 20,
-            right: 20,
-            child: Center(
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Green ",
-                      style: GoogleFonts.nunito(
-                        fontSize: 56,
-                        fontWeight: FontWeight.w900, // Equivalente a Black
-                        color: Colors.white, // Cambia si deseas otro color
-                      ),
-                    ),
-                    TextSpan(
-                      text: "Cloud",
-                      style: GoogleFonts.nunito(
-                        fontSize: 56,
-                        fontWeight: FontWeight.w900,
-                        color: Colors.green, // Cambia si deseas otro color
-                      ),
-                    ),
-                  ],
+        // Calculamos tamaños responsivos
+        final logoSize = maxWidth * 0.14; // 56px en una pantalla de 400px
+
+        return Scaffold(
+          backgroundColor: Colors.black,
+          body: Stack(
+            children: [
+              /// SVG de fondo
+              Positioned.fill(
+                child: SvgPicture.asset(
+                  "lib/assets/images/inicio.svg",
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
+
+              /// Texto separado en la parte superior
+              Positioned(
+                top: maxHeight * 0.1, // 80px en una pantalla de 800px
+                left: maxWidth * 0.05, // 20px en una pantalla de 400px
+                right: maxWidth * 0.05,
+                child: Center(
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: "Green ",
+                          style: GoogleFonts.nunito(
+                            fontSize: logoSize,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.white,
+                          ),
+                        ),
+                        TextSpan(
+                          text: "Cloud",
+                          style: GoogleFonts.nunito(
+                            fontSize: logoSize,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.green,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
